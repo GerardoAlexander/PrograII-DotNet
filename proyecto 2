@@ -1,0 +1,198 @@
+#include <cstdlib>//s el archivo de cabecera de la biblioteca estándar de propósito general del lenguaje de programación 
+#include<iostream>//El flujo de entrada y salida de datos en C++
+#include<stdlib.h>//Contiene los prototipos de funciones de C para gestión de memoria dinámica, control de procesos y otras. Es compatible con C++ 
+#include<fstream>// Flujos hacia/desde ficheros. Permite la manipulación de archivos desde el programar, tanto leer como escribir en ellos.
+#include<ctime>//relacionado con formato de hora y fecha es un archivo
+#include <vector>// lo utilizamos para  en los vectores 
+#include <string>//es un conjunto de caracteres, o valores de tipo char
+#include <stdio.h>//nos permite manipular ficheros desde nuestros programas en C++, para lo cual incluimos la siguiente directiva al comienzo de nuestros ficheros de código
+#include <string.h>//contiene la definición de macros, constantes, funciones y tipos y algunas operaciones de manipulación de memoria.
+using namespace std;//espacio de nombre etandar definido de una vez para obtener sus propiedades 
+
+class Persona{
+	string Nombre;
+	string Apellido;
+	int cedula;
+	string fecha_Nac;
+	public:
+		Persona();
+		void set_Nombre(string nom);
+		void set_Apellido(string apel);
+		void set_cedula(int ced);
+		void set_Nac(string fecha);
+		string get_Nombre(){ return Nombre;}
+		string get_Apellido(){ return Apellido;}
+		int get_Cedula(){ return cedula;}
+		string get_Nacimiento(){ return fecha_Nac;}
+};
+
+Persona::Persona(){
+	Nombre = "";
+	Apellido = "";
+	cedula = 0;
+	fecha_Nac = "";
+}
+
+void Persona::set_Nombre(string nom){//void
+	Nombre = nom;
+}
+
+void Persona::set_Apellido(string apel){//void
+	Apellido = apel;
+}
+
+void Persona::set_cedula(int ced){//void
+	cedula = ced;
+}
+
+void Persona::set_Nac(string fecha){//void
+	fecha_Nac = fecha;
+}
+
+class Forma_Pago{
+	string Forma;
+	public:
+		Forma_Pago();
+		void set_Forma(string form);
+		string get_Forma(){ return Forma;}
+};
+
+Forma_Pago::Forma_Pago(){
+	Forma = "";
+}
+
+void Forma_Pago::set_Forma(string form){
+	Forma = form;
+}
+
+class Departamento : public Persona{
+	int id_dep;
+	public:
+		Departamento();
+		void set_idDep(int id);
+		int get_idDep(){ return id_dep;}
+};
+
+void Departamento::set_idDep(int id){//void
+	id_dep = id;
+}
+
+class Deduccion: public Persona{
+	double monto;
+	double porcentaje;
+	public:
+		Deduccion();
+		void set_Monto(double mont);
+		void set_Porcent(double porct);
+		double get_monto(){ return monto;}
+		double get_porcent(){ return porcentaje;}
+};
+
+Deduccion::Deduccion(){
+	monto = 0;
+	porcentaje = 0;
+}
+
+void Deduccion::set_Monto(double mont){
+	monto = mont;
+}
+
+void Deduccion::set_Porcent(double porct){
+	porcentaje = porct;
+}
+
+class Plus_Salarial:public Persona{
+	double porcent;
+	public:
+		Plus_Salarial();
+		void set_plus(double plus);
+		double get_porcent(){ return porcent;}
+};
+
+Plus_Salarial::Plus_Salarial(){
+	porcent = 0;
+}
+
+void Plus_Salarial::set_plus(double plus){
+	porcent = plus;
+}
+
+class SalarioBase{
+	int Jornada;
+	double pago;
+	public:
+		SalarioBase();
+		void set_Jornada(int jor);
+		void set_pago(double pg);
+		int get_jornada(){ return Jornada;}
+		double get_pago(){ return pago;}
+};
+
+class Empleado : public Departamento, public Forma_Pago,public Deduccion, public Plus_Salarial,public SalarioBase{
+	int id_emp;
+	public:
+		Empleado();
+		void set_id(int id);
+		int get_idEmp(){ return id_emp;}
+		friend void CalcSalario(Empleado);
+		
+};
+
+Empleado::Empleado(){
+	id_emp = 0;
+}
+
+ void Empleado::set_id(int id){ //void
+	id_emp = id;
+}
+
+class Planilla:public Empleado{
+	int Cod_Planilla;
+	string Fecha;
+	public:
+		Planilla();
+		void set_cod(int cod);
+		void set_fecha(string fecha);
+		int get_codplanilla(){ return Cod_Planilla;}
+		string get_fecha(){ return Fecha;}	
+};
+
+Planilla::Planilla(){
+	Cod_Planilla = 0;
+	Fecha = "";
+}
+
+void Planilla::set_cod(int cod){
+	Cod_Planilla = cod;
+}
+
+void Planilla::set_fecha(string fecha){
+	Fecha = fecha;
+}
+
+void CalcSalario(Empleado e){
+	double pago = e.get_pago();
+	int jornada = e.get_jornada();
+	double PagoDia = pago * jornada;
+	string forma = e.get_Forma();
+	double bruto;
+	/*switch(forma){
+		case "Quincenal" || "quincenal" || "15":
+				bruto = PagoDia * 15;
+			break;
+		case "Semanal" || "semanal" || "8":
+				bruto = PagoDia * 8;
+			break;
+		case "Mensual" || "mes" || "mensual" || "Mes":
+				bruto = PagoDia * 30;
+			break;
+	}*/
+	
+	cout<<"El Salario del Empleado es de: "<<bruto<<" colones, por "<<forma<<endl;
+}
+
+int main(){//para mostrar el metodo donde es almacenado el menu que contiene los metodos y funciones de las operaciones, principal
+		
+	system("pause>null");
+	return 0;//retorna cuando llegue a cero, codigo basura, no habilitada la funcion
+} 
